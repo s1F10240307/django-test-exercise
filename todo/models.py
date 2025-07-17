@@ -13,3 +13,12 @@ class Task(models.Model):
         if self.due_at is None:
             return False
         return self.due_at < dt
+
+class Comment(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
+    author = models.CharField(max_length=50)
+    content = models.TextField()
+    posted_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'Comment by {self.author} on {self.task.title}'
