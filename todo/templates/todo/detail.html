@@ -29,6 +29,30 @@
       | <a href="{% url 'delete' task.id %}">Delete</a>
       | <a href="{% url 'close' task.id %}">Close</a>
     </div>
+
+    <hr>
+
+    <h2>Comments: コメント</h2>
+    <ul>
+    {% for comment in comments %}
+      <li>
+        <strong>{{ comment.author }}</strong>: {{ comment.content }}<br>
+        <small>({{ comment.posted_at }})</small>
+      </li>
+    {% empty %}
+      <li>No comments yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Add a Comment</h3>
+  <form method="post" action="{% url 'detail' task.id %}">
+    {% csrf_token %}
+    <input type="text" name="author" placeholder="Your name">
+    <br>
+    <textarea name="content" rows="3" cols="40" placeholder="Write your comment here..."></textarea>
+    <br>
+    <button type="submit">Post Comment</button>
+  </form>
   </body>
 
 </html>
